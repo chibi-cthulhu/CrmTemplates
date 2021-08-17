@@ -32,29 +32,34 @@ xslSub = loadXMLDoc(i + " sub.xsl");
   xsl = loadXMLDoc(i + " body.xsl");
   if (document.implementation && document.implementation.createDocument)
   {
-	   var resultDocument = getDoc(xmlSub, xslSub, document);	   
+	  xsltProcessor = new XSLTProcessor();
+	xsltProcessor.importStylesheet(xmlSub);
+	var resultDocument = xsltProcessor.transformToFragment(xslSub, document);
+    resultDocument = ClearResult(resultDocument);
 	   var subject = document.createElement("h3");
 	   subject.appendChild(resultDocument); 
 	   document.getElementById("example").appendChild(subject);
 	   var pageBreak = document.createElement("br");
 	   document.getElementById("example").appendChild(pageBreak);
 	 
-	  var resultDocument = getDoc(xml, xsl, document);	  
-	  var bodyT = document.createElement("p");
-	  bodyT.appendChild(resultDocument);
-          document.getElementById("example").appendChild(bodyT);
+
+	xsltProcessor = new XSLTProcessor();
+	xsltProcessor.importStylesheet(xml);
+	var resultDocument = xsltProcessor.transformToFragment(xsl, document);
+    resultDocument = ClearResult(resultDocument);
+	  
+	  var body = document.createElement("p");
+	  body.appendChild(resultDocument);
 	  document.getElementById("example").appendChild(pageBreak);
   }
 }
 }
-	function getDoc(xml, xsl, document){
-          xsltProcessor = new XSLTProcessor();
-	  xsltProcessor.importStylesheet(xml);
-	  resultDocument = xsltProcessor.transformToFragment(xsl, document);
-	  resultDocument.replace("&#160;", "");
+	function ClearResult(resultDocument){
+	   resultDocument.replace("&#160;", "");
 	   resultDocument.replace("<br>", "\n");
 	   resultDocument.replace("<div>", "");
 	   resultDocument.replace("</div>", "");
+	   return resultDocument;
 }
 </script>
 </head>
