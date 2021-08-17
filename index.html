@@ -13,9 +13,8 @@ else
   {
   xhttp = new XMLHttpRequest();
   }
-//xhttp.open("GET", filename, false);
+xhttp.open("GET", filename, false);
 //try {xhttp.responseType = "msxml-document"} catch(err) {} // Helping IE11
-xhttp.open("GET", "\", false);
 xhttp.send("");
 return xhttp.responseXML;
 }
