@@ -21,22 +21,38 @@ return xhttp.responseXML;
 
 function displayResult()
 {
-xml = loadXMLDoc("cdcatalog.xml");
-xsl = loadXMLDoc("cdcatalog_client.xsl");
-// code for IE
-if (window.ActiveXObject || xhttp.responseType == "msxml-document")
+//xml = loadXMLDoc("cdcatalog.xml");
+//xsl = loadXMLDoc("cdcatalog_client.xsl");
+for (i = 1; i < 2; i++) {
+
+xmlSub = loadXMLDoc(i + " subXml.xml");
+xslSub = loadXMLDoc(i + " sub.xsl");
+
+  xml = loadXMLDoc(i + " bodyXml.xml");
+  xsl = loadXMLDoc(i + " body.xsl");
+  if (document.implementation && document.implementation.createDocument)
   {
-  ex = xml.transformNode(xsl);
-  document.getElementById("example").innerHTML = ex;
+	  xsltProcessor = new XSLTProcessor();
+	  xsltProcessor.importStylesheet(xslSub);
+	  resultDocument = xsltProcessor.transformToFragment(xmlSub, document);
+	   
+	   var subject = document.createElement("h1");
+	   subject.appendChild(resultDocument); 
+	   document.getElementById("example").appendChild(subject);
+	   var pageBreak = document.createElement("br");
+	   document.getElementById("example").appendChild(pageBreak);
+	 
+
+	  xsltProcessor = new XSLTProcessor();
+	  xsltProcessor.importStylesheet(xsl);
+	  resultDocument = xsltProcessor.transformToFragment(xml, document);
+	  
+	  var bodyT = document.createElement("p");
+	  bodyT.appendChild(resultDocument);
+    document.getElementById("example").appendChild(bodyT);
+	  document.getElementById("example").appendChild(pageBreak);
   }
-// code for Chrome, Firefox, Opera, etc.
-else if (document.implementation && document.implementation.createDocument)
-  {
-  xsltProcessor = new XSLTProcessor();
-  xsltProcessor.importStylesheet(xsl);
-  resultDocument = xsltProcessor.transformToFragment(xml, document);
-  document.getElementById("example").appendChild(resultDocument); //onload="displayResult()"
-  }
+}
 }
 </script>
 </head>
