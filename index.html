@@ -34,7 +34,8 @@ xslSub = loadXMLDoc(i + " sub.xsl");
   {
 	var resultDocument = getDoc(xmlSub, xslSub, document);
 	   var subject = document.createElement("h3");
-	   subject.appendChild(resultDocument); 
+	   //subject.appendChild(resultDocument); 
+	   subject.innerHTML = resultDocument.textContent;
 	   document.getElementById("example").appendChild(subject);
 	   var pageBreak = document.createElement("br");
 	   document.getElementById("example").appendChild(pageBreak);
@@ -43,7 +44,8 @@ xslSub = loadXMLDoc(i + " sub.xsl");
 	   var resultDocument = getDoc(xml, xsl, document);
 	  
 	  var bodyT = document.createElement("p");
-	  bodyT.appendChild(resultDocument);
+	  //bodyT.appendChild(resultDocument);
+	  bodyT.innerHTML = resultDocument.textContent;
 	  document.getElementById("example").appendChild(bodyT);
 	  document.getElementById("example").appendChild(pageBreak);
   }
@@ -53,11 +55,12 @@ xslSub = loadXMLDoc(i + " sub.xsl");
  xsltProcessor = new XSLTProcessor();
 	  xsltProcessor.importStylesheet(xsl);
 	  resultDocument = xsltProcessor.transformToFragment(xml, document);
+		return resultDocument;
 	   resultDocument.textContent = resultDocument.textContent.replaceAll("&#160;", "");
 	   resultDocument.textContent = resultDocument.textContent.replaceAll("<br>", "\n");
 	   resultDocument.textContent = resultDocument.textContent.replaceAll("<div>", "");
 	   resultDocument.textContent = resultDocument.textContent.replaceAll("</div>", "\n");
-	   return resultDocument;
+	   
 }
 </script>
 </head>
