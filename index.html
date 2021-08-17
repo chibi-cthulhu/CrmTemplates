@@ -52,10 +52,10 @@ xslSub = loadXMLDoc(i + " sub.xsl");
  xsltProcessor = new XSLTProcessor();
 	  xsltProcessor.importStylesheet(xsl);
 	  resultDocument = xsltProcessor.transformToFragment(xml, document);
-	   resultDocument.replace("&#160;", "");
-	   resultDocument.replace("<br>", "\n");
-	   resultDocument.replace("<div>", "");
-	   resultDocument.replace("</div>", "");
+	   resultDocument.textContent.replace("&#160;", "");
+	   resultDocument.textContent.replace("<br>", "\n");
+	   resultDocument.textContent.replace("<div>", "");
+	   resultDocument.textContent.replace("</div>", "");
 }
 </script>
 </head>
