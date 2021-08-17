@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  hello world
 <head>
 <script>
 function loadXMLDoc(filename)
@@ -35,12 +36,12 @@ else if (document.implementation && document.implementation.createDocument)
   xsltProcessor.importStylesheet(xsl);
   resultDocument = xsltProcessor.transformToFragment(xml, document);
   var x = 
-  document.getElementById("example").appendChild(x);
+  document.getElementById("example").appendChild(x); //onload="displayResult()"
   }
 }
 </script>
 </head>
-<body onload="displayResult()">
+<body>
 <div id="example" />
 </body>
 </html>
